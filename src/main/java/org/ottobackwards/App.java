@@ -26,6 +26,8 @@ import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.TypeRef;
+import com.jayway.jsonpath.spi.cache.CacheProvider;
+import com.jayway.jsonpath.spi.cache.LRUCache;
 import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
 import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
@@ -106,7 +108,7 @@ public class App {
         return EnumSet.noneOf(Option.class);
       }
     });
-
+    CacheProvider.setCache(new LRUCache(100));
   }
 
   public List<JSONObject> parserMany(byte[] rawMessage, String jsonPath) {
