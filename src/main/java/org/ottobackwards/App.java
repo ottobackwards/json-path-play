@@ -116,8 +116,9 @@ public class App {
         .read(jsonPath, typeRef);
     final List<JSONObject> ret = new ArrayList<>();
     messages.forEach((m) -> {
+      JSONObject originalJsonObject = new JSONObject(m);
       JSONObject jsonObject = normalizeJSON(m);
-      String originalString = jsonObject.toJSONString();
+      String originalString = originalJsonObject.toJSONString();
       jsonObject.put("original_string", originalString);
       if (!jsonObject.containsKey("timestamp")) {
         jsonObject.put("timestamp", System.currentTimeMillis());
