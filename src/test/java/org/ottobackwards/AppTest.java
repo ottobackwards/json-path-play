@@ -21,6 +21,10 @@ package org.ottobackwards;
 import org.adrianwalker.multilinestring.Multiline;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
 public class AppTest
 {
   /**
@@ -42,6 +46,34 @@ public class AppTest
   /**{"name":"scoobie","value":"snack"}*/
   @Multiline
   static String JSON_SINGLE2;
+
+  /**{ "fields":[
+   {
+   "maskType": "a",
+   "name": "Id"
+   },
+   {
+   "maskType": "b",
+   "name": "Type"
+   }
+   ]
+   }*/
+   @Multiline
+  static String NIFI_PROB;
+
+   @Test
+   public void testNifi() {
+     App app = new App();
+     List value = app.justJsonPath(NIFI_PROB.getBytes(), "$.fields[?(@.name=='Type')].maskType");
+     if( value != null ) {
+       value.forEach(new Consumer() {
+         @Override
+         public void accept(Object o) {
+           System.out.println(o.toString());
+         }
+       });
+     }
+   }
 
   @Test
   public void test() {

@@ -88,6 +88,8 @@ public class App {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
   public App() {
+  }
+  static {
     Configuration.setDefaults(new Configuration.Defaults() {
 
       private final JsonProvider jsonProvider = new JacksonJsonProvider();
@@ -109,6 +111,11 @@ public class App {
       }
     });
     CacheProvider.setCache(new LRUCache(100));
+  }
+
+  public List justJsonPath(byte[] rawMessage, String jsonPath) {
+    return JsonPath.parse(new String(rawMessage))
+            .read(jsonPath);
   }
 
   public List<JSONObject> parserMany(byte[] rawMessage, String jsonPath) {
